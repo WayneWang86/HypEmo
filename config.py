@@ -11,7 +11,7 @@ config_args = {
     'training_config': {
         # 'batch_size': (5, 'batch size for training'),
         # 'epochs': (1, 'maximum number of epochs to train for'),
-        'batch_size': (100, 'batch size for training'),
+        'batch_size': (50, 'batch size for training'),
         'epochs': (20, 'maximum number of epochs to train for'),
         'seed': (1234, 'seed for training'),
         'alpha': (0.9, 'weight for BCE*poincare_dist loss'),

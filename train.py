@@ -45,85 +45,85 @@ class_names = [v for k, v in sorted(idx2label.items(), key=lambda item: item[0])
 word2vec, idx2vec = emb_dicts
 args.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-print(args.device)
+# print(args.device)
 
-# np.random.seed(args.seed)
-# torch.manual_seed(args.seed)
-# logging.info(f'Using device {args.device}, seed={args.seed}, training on {args.dataset} dataset.')
+np.random.seed(args.seed)
+torch.manual_seed(args.seed)
+logging.info(f'Using device {args.device}, seed={args.seed}, training on {args.dataset} dataset.')
 
-# gm = HypEmo(args.dataset, num_classes, class_names, idx2vec, args.alpha, args.gamma, batch_size=args.batch_size)
-# best_valid_weighted_f1, best_test_weighted_f1 = -1, -1
-# best_valid_loss = 1e5
-# train_loss, valid_loss = [], []
-# train_acc, valid_acc, test_acc = [], [], []
-# train_weighted_f1, valid_weighted_f1, test_weighted_f1 = [], [], []
+gm = HypEmo(args.dataset, num_classes, class_names, idx2vec, args.alpha, args.gamma, batch_size=args.batch_size)
+best_valid_weighted_f1, best_test_weighted_f1 = -1, -1
+best_valid_loss = 1e5
+train_loss, valid_loss = [], []
+train_acc, valid_acc, test_acc = [], [], []
+train_weighted_f1, valid_weighted_f1, test_weighted_f1 = [], [], []
 
-# total_train_time = 0
-# total_test_time = 0
-# for i in range(args.epochs):
-#     start_time = time.time()
-#     train_log = gm.train_step(i)
-#     end_time = time.time()
-#     train_time = end_time - start_time
-#     total_train_time += train_time
-#     logging.info(f"Training time for this epoch: {train_time:.2f}")
+total_train_time = 0
+total_test_time = 0
+for i in range(args.epochs):
+    start_time = time.time()
+    train_log = gm.train_step(i)
+    end_time = time.time()
+    train_time = end_time - start_time
+    total_train_time += train_time
+    logging.info(f"Training time for this epoch: {train_time:.2f}")
     
-#     valid_log = gm.valid_step(i)
-#     test_start_time = time.time()
-#     test_log = gm.test_step(i)    
-#     test_end_time = time.time()
-#     test_time = test_end_time - test_start_time
-#     total_test_time += test_time
-#     logging.info(f"Inference time for this epoch: {test_time:.2f}")
+    valid_log = gm.valid_step(i)
+    test_start_time = time.time()
+    test_log = gm.test_step(i)    
+    test_end_time = time.time()
+    test_time = test_end_time - test_start_time
+    total_test_time += test_time
+    logging.info(f"Inference time for this epoch: {test_time:.2f}")
 
-#     train_acc.append(train_log['train_acc'])
-#     train_weighted_f1.append(train_log['train_weighted_f1'])
-#     train_loss.append(train_log['loss'])
+    train_acc.append(train_log['train_acc'])
+    train_weighted_f1.append(train_log['train_weighted_f1'])
+    train_loss.append(train_log['loss'])
     
-#     valid_acc.append(valid_log['valid_acc'])
-#     valid_weighted_f1.append(valid_log['valid_weighted_f1'])
-#     valid_loss.append(valid_log['valid_loss'])
+    valid_acc.append(valid_log['valid_acc'])
+    valid_weighted_f1.append(valid_log['valid_weighted_f1'])
+    valid_loss.append(valid_log['valid_loss'])
     
-#     test_acc.append(test_log['test_acc'])
-#     test_weighted_f1.append(test_log['test_weighted_f1'])
+    test_acc.append(test_log['test_acc'])
+    test_weighted_f1.append(test_log['test_weighted_f1'])
     
-#     # define the path for saving the prediciton output 
-#     valid_pred_path = f'./pred_output/epoch_{i}_valid_pred.csv'
-#     test_pred_path = f'./pred_output/epoch_{i}_test_pred.csv'
+    # define the path for saving the prediciton output 
+    valid_pred_path = f'./pred_output/epoch_{i}_valid_pred.csv'
+    test_pred_path = f'./pred_output/epoch_{i}_test_pred.csv'
     
-#     valid_pred_best_loss_path = f'./≈epoch_{i}_valid_pred_best_loss.csv'
-#     valid_pred_best_f1_path = f'./pred_output/epoch_{i}_valid_pred_best_f1.csv'
-#     test_pred_best_f1_path = f'./pred_output/epoch_{i}_test_pred_best_f1.csv'
+    valid_pred_best_loss_path = f'./≈epoch_{i}_valid_pred_best_loss.csv'
+    valid_pred_best_f1_path = f'./pred_output/epoch_{i}_valid_pred_best_f1.csv'
+    test_pred_best_f1_path = f'./pred_output/epoch_{i}_test_pred_best_f1.csv'
     
-#     # save the predictions for valid and test sets at each epoch
-#     save_predictions_to_csv(valid_pred_path, valid_log['valid_pred'])
-#     save_predictions_to_csv(test_pred_path, test_log['test_pred'])
+    # save the predictions for valid and test sets at each epoch
+    save_predictions_to_csv(valid_pred_path, valid_log['valid_pred'])
+    save_predictions_to_csv(test_pred_path, test_log['test_pred'])
 
-#     if valid_log['valid_loss'] < best_valid_loss:
-#         best_valid_loss = valid_log['valid_loss']
-#         test_acc_best_valid = test_log['test_acc']
-#         test_weighted_f1_best_valid = test_log['test_weighted_f1']
-#         logging.info(f"[valid loss new low] test | acc: {test_acc_best_valid:.04f}, f1: {test_weighted_f1_best_valid:.04f}")
-#         save_predictions_to_csv(valid_pred_best_loss_path, valid_log['valid_pred'])        
+    if valid_log['valid_loss'] < best_valid_loss:
+        best_valid_loss = valid_log['valid_loss']
+        test_acc_best_valid = test_log['test_acc']
+        test_weighted_f1_best_valid = test_log['test_weighted_f1']
+        logging.info(f"[valid loss new low] test | acc: {test_acc_best_valid:.04f}, f1: {test_weighted_f1_best_valid:.04f}")
+        save_predictions_to_csv(valid_pred_best_loss_path, valid_log['valid_pred'])        
     
-#     if valid_log['valid_weighted_f1'] > best_valid_weighted_f1:
-#         best_valid_weighted_f1 = valid_log['valid_weighted_f1']
-#         best_valid_acc = valid_log['valid_acc']
-#         test_acc_best_valid = test_log['test_acc']
-#         test_weighted_f1_best_valid = test_log['test_weighted_f1']
-#         logging.info(f"[valid f1 new high] test | acc: {test_acc_best_valid:.04f}, f1: {test_weighted_f1_best_valid:.04f}")
-#         save_predictions_to_csv(valid_pred_best_f1_path, valid_log['valid_pred'])
+    if valid_log['valid_weighted_f1'] > best_valid_weighted_f1:
+        best_valid_weighted_f1 = valid_log['valid_weighted_f1']
+        best_valid_acc = valid_log['valid_acc']
+        test_acc_best_valid = test_log['test_acc']
+        test_weighted_f1_best_valid = test_log['test_weighted_f1']
+        logging.info(f"[valid f1 new high] test | acc: {test_acc_best_valid:.04f}, f1: {test_weighted_f1_best_valid:.04f}")
+        save_predictions_to_csv(valid_pred_best_f1_path, valid_log['valid_pred'])
         
-#     if test_log['test_weighted_f1'] > best_test_weighted_f1:
-#         best_test_weighted_f1 = test_log['test_weighted_f1']
-#         best_test_acc = test_log['test_acc']
-#         save_predictions_to_csv(test_pred_best_f1_path, test_log['test_pred'])
+    if test_log['test_weighted_f1'] > best_test_weighted_f1:
+        best_test_weighted_f1 = test_log['test_weighted_f1']
+        best_test_acc = test_log['test_acc']
+        save_predictions_to_csv(test_pred_best_f1_path, test_log['test_pred'])
 
-#     logging.info(f"[best] valid | acc: {best_valid_acc:.04f}, f1: {best_valid_weighted_f1:.04f}\n test | acc: {best_test_acc:.04f}, f1: {best_test_weighted_f1:.04f}") 
+    logging.info(f"[best] valid | acc: {best_valid_acc:.04f}, f1: {best_valid_weighted_f1:.04f}\n test | acc: {best_test_acc:.04f}, f1: {best_test_weighted_f1:.04f}") 
     
-#     # save the predictions for valid and test sets at each epoch
-#     valid_csv_path = f'epoch_{i}_valid_pred.csv'
-#     test_csv_path = f'epoch_{i}_test_pred.csv'
+    # save the predictions for valid and test sets at each epoch
+    valid_csv_path = f'epoch_{i}_valid_pred.csv'
+    test_csv_path = f'epoch_{i}_test_pred.csv'
     
-# logging.info(f"Average training time: {total_train_time/args.epochs}")
-# logging.info(f"Average inference time: {total_test_time/args.epochs}")
+logging.info(f"Average training time: {total_train_time/args.epochs}")
+logging.info(f"Average inference time: {total_test_time/args.epochs}")
