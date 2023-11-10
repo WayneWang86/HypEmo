@@ -5,6 +5,7 @@ import pickle
 import logging
 import datetime
 import optimizers
+import csv
 import numpy as np
 from tqdm import tqdm
 
@@ -143,7 +144,13 @@ class HypEmo():
                 else:
                     test_pred = torch.cat([test_pred, prediction])
                 test_label.extend(label.tolist())
-
+        csv_file_path = 'output.csv'
+        data = list(zip(test_pred.tolist(), test_label))
+        with open(csv_file_path, mode='w', newline='') as file:
+          writer = csv.writer(file)
+          writer.writerow(['predict', 'output'])
+          writer.writerows(data)
+          
         test_pred = test_pred.detach().cpu().numpy()
         test_acc = accuracy_score(test_pred, test_label)
         test_weighted_f1 = f1_score(test_pred, test_label, average='weighted')
