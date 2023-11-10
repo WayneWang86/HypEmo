@@ -19,6 +19,20 @@ from sentence_transformers import SentenceTransformer
 from util_functions import *
 from hypemo import HypEmo
 
+
+# help functions to save the predictions to csv files
+def save_predictions_to_csv(file_path, predictions):
+    # Check if the file already exists and remove it if it does
+    if os.path.exists(file_path):
+        os.remove(file_path)
+        
+    # Write the predictions to a csv file
+    with open(file_path, 'w', newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(["Index", "Predicted_Label"])  # Write header
+        for i, prediction in enumerate(predictions):
+            writer.writerow([i, prediction])
+
 args = parser.parse_args()
 logging.basicConfig(filename=f'./exp/{args.dataset}_{args.alpha}_{args.gamma}.log', level=logging.INFO)
 logging.getLogger().addHandler(logging.StreamHandler())
@@ -68,12 +82,25 @@ for i in range(args.epochs):
     
     test_acc.append(test_log['test_acc'])
     test_weighted_f1.append(test_log['test_weighted_f1'])
+    
+    # define the path for saving the prediciton output 
+    valid_pred_path = f'./pred_output/epoch_{i}_valid_pred.csv'
+    test_pred_path = f'./pred_output/epoch_{i}_test_pred.csv'
+    
+    valid_pred_best_loss_path = f'./pred_output/epoch_{i}_valid_pred_best_loss.csv'
+    valid_pred_best_f1_path = f'./pred_output/epoch_{i}_valid_pred_best_f1.csv'
+    test_pred_best_f1_path = f'./pred_output/epoch_{i}_test_pred_best_f1.csv'
+    
+    # save the predictions for valid and test sets at each epoch
+    save_predictions_to_csv(valid_pred_path, valid_log['valid_pred'])
+    save_predictions_to_csv(test_pred_path, test_log['test_pred'])
 
     if valid_log['valid_loss'] < best_valid_loss:
         best_valid_loss = valid_log['valid_loss']
         test_acc_best_valid = test_log['test_acc']
         test_weighted_f1_best_valid = test_log['test_weighted_f1']
-        logging.info(f"[valid loss new low] test | acc: {test_acc_best_valid:.04f}, f1: {test_weighted_f1_best_valid:.04f}")        
+        logging.info(f"[valid loss new low] test | acc: {test_acc_best_valid:.04f}, f1: {test_weighted_f1_best_valid:.04f}")
+        save_predictions_to_csv(valid_pred_best_loss_path, valid_log['valid_pred'])        
     
     if valid_log['valid_weighted_f1'] > best_valid_weighted_f1:
         best_valid_weighted_f1 = valid_log['valid_weighted_f1']
@@ -81,11 +108,18 @@ for i in range(args.epochs):
         test_acc_best_valid = test_log['test_acc']
         test_weighted_f1_best_valid = test_log['test_weighted_f1']
         logging.info(f"[valid f1 new high] test | acc: {test_acc_best_valid:.04f}, f1: {test_weighted_f1_best_valid:.04f}")
+        save_predictions_to_csv(valid_pred_best_f1_path, valid_log['valid_pred'])
         
     if test_log['test_weighted_f1'] > best_test_weighted_f1:
         best_test_weighted_f1 = test_log['test_weighted_f1']
         best_test_acc = test_log['test_acc']
+        save_predictions_to_csv(test_pred_best_f1_path, test_log['test_pred'])
 
     logging.info(f"[best] valid | acc: {best_valid_acc:.04f}, f1: {best_valid_weighted_f1:.04f}\n test | acc: {best_test_acc:.04f}, f1: {best_test_weighted_f1:.04f}") 
+    
+    # save the predictions for valid and test sets at each epoch
+    valid_csv_path = f'epoch_{i}_valid_pred.csv'
+    test_csv_path = f'epoch_{i}_test_pred.csv'
+    
 logging.info(f"Average training time: {total_train_time/args.epochs}")
 logging.info(f"Average inference time: {total_test_time/args.epochs}")

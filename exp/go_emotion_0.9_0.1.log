@@ -1,0 +1,32 @@
+INFO:root:Using device cpu, seed=1234, training on go_emotion dataset.
+INFO:root:train | loss: 20.5991 acc: 0.2980, f1: 0.3353
+INFO:root:Training time for this epoch: 5235.62
+INFO:root:valid | loss: 11.4920 acc: 0.5311, f1: 0.5813
+INFO:root:test | acc: 0.5137, f1: 0.5676
+INFO:root:Inference time for this epoch: 279.53
+INFO:root:[valid loss new low] test | acc: 0.5137, f1: 0.5676
+INFO:root:[valid f1 new high] test | acc: 0.5137, f1: 0.5676
+INFO:root:[best] valid | acc: 0.5311, f1: 0.5813
+ test | acc: 0.5137, f1: 0.5676
+INFO:root:Using device cpu, seed=1234, training on go_emotion dataset.
+INFO:root:train | loss: 20.5991 acc: 0.2980, f1: 0.3353
+INFO:root:Training time for this epoch: 5248.66
+INFO:root:valid | loss: 11.4920 acc: 0.5311, f1: 0.5813
+INFO:root:test | acc: 0.5137, f1: 0.5676
+INFO:root:Inference time for this epoch: 280.21
+INFO:root:[valid loss new low] test | acc: 0.5137, f1: 0.5676
+INFO:root:[valid f1 new high] test | acc: 0.5137, f1: 0.5676
+INFO:root:[best] valid | acc: 0.5311, f1: 0.5813
+ test | acc: 0.5137, f1: 0.5676
+INFO:root:train | loss: 9.6269 acc: 0.5826, f1: 0.6138
+INFO:root:Training time for this epoch: 5245.61
+INFO:root:valid | loss: 7.9630 acc: 0.6099, f1: 0.6321
+INFO:root:test | acc: 0.5992, f1: 0.6249
+INFO:root:Inference time for this epoch: 279.60
+INFO:root:[valid loss new low] test | acc: 0.5992, f1: 0.6249
+INFO:root:[valid f1 new high] test | acc: 0.5992, f1: 0.6249
+INFO:root:[best] valid | acc: 0.6099, f1: 0.6321
+ test | acc: 0.5992, f1: 0.6249
+INFO:root:Average training time: 5247.13509452343
+INFO:root:Average inference time: 279.9048970937729
+INFO:root:Using device cpu, seed=1234, training on go_emotion dataset.
