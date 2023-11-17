@@ -6,3 +6,6 @@ __pycache__/
 
 # Ignore all .ipynb_checkpoints folders and their contents within all subdirectories
 **/.ipynb_checkpoints/
+
+# Ignore all .DS_Store files and .DS_Store folders within all subdirectories
+**/.DS_Store
