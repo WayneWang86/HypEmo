@@ -9,3 +9,6 @@ __pycache__/
 
 # Ignore all .DS_Store files and .DS_Store folders within all subdirectories
 **/.DS_Store
+
+# Ignore all virtual_documents
+**/.virtual_documents
