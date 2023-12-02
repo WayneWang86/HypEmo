@@ -32,9 +32,8 @@ torch.cuda.manual_seed(args.seed)
 
 class HypEmo():
     def __init__(self, dataset, n_classes, class_names, idx2vec, alpha, gamma, batch_size=16):
-        # trainset = HyoEmoDataSet(dataset, 'train')
+        trainset = HyoEmoDataSet(dataset, 'train')
         # trainset = HyoEmoDataSet(dataset, 'train_back_translation')
-        trainset = HyoEmoDataSet(dataset, 'train_gpt_augmentation')
         self.train_loader = DataLoader(trainset, batch_size=batch_size, shuffle=True, collate_fn = trainset.collate)
         validset = HyoEmoDataSet(dataset, 'valid')
         self.valid_loader = DataLoader(validset, batch_size=256, shuffle=False, collate_fn = validset.collate)

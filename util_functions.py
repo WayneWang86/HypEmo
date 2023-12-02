@@ -10,8 +10,9 @@ class HyoEmoDataSet(Dataset):
     def __init__(self, dataset, mode):
         super().__init__()
         assert dataset in all_dataset_list
-        assert mode in ['train', 'valid', 'test', 'train_back_translation', 'train_gpt_augmentation']
-        df = pd.read_csv(f'./data/{dataset}/{mode}.csv')
+        assert mode in ['train', 'valid', 'test', 'train_back_translation']
+        # df = pd.read_csv(f'./data/{dataset}/{mode}.csv')
+        df = pd.read_csv(f'./data/{dataset}/multi-label/{mode}.csv')
         self.text = df.text
         self.label = df.label
         self.tkr = AutoTokenizer.from_pretrained(ENCODER_TYPE)
