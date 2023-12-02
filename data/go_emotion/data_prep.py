@@ -29,9 +29,9 @@ train = pre_processing("./full_dataset/train.tsv")
 dev = pre_processing("./full_dataset/dev.tsv")
 test = pre_processing("./full_dataset/test.tsv")
 
-# train_orig = pd.read_csv("./train.csv")
-# val_orig = pd.read_csv("./valid.csv")
-# test_orig = pd.read_csv("./test.csv")
+train_orig = pd.read_csv("./train.csv")
+val_orig = pd.read_csv("./valid.csv")
+test_orig = pd.read_csv("./test.csv")
 
 # train = pd.concat([train_orig, train.iloc[400:450]])
 # dev = pd.concat([val_orig, dev.iloc[400:450]])
