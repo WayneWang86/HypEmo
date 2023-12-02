@@ -10,7 +10,7 @@ class HyoEmoDataSet(Dataset):
     def __init__(self, dataset, mode):
         super().__init__()
         assert dataset in all_dataset_list
-        assert mode in ['train', 'valid', 'test', 'train_back_translation']
+        assert mode in ['train', 'valid', 'test', 'train-multi']
         # df = pd.read_csv(f'./data/{dataset}/{mode}.csv')
         df = pd.read_csv(f'./data/{dataset}/multi-label/{mode}.csv')
         self.text = df.text
