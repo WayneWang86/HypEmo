@@ -7,6 +7,7 @@ import datetime
 import optimizers
 import numpy as np
 import csv
+import sys
 from tqdm import tqdm
 
 
@@ -20,7 +21,6 @@ from sentence_transformers import SentenceTransformer
 
 from util_functions import *
 from hypemo import HypEmo
-
 
 # help functions to save the predictions to csv files
 def save_predictions_to_csv(file_path, predictions):
@@ -36,7 +36,9 @@ def save_predictions_to_csv(file_path, predictions):
             writer.writerow([i, prediction])
 
 args = parser.parse_args()
-logging.basicConfig(filename=f'./exp/{args.dataset}_{args.alpha}_{args.gamma}.log', level=logging.INFO)
+aug_method = os.environ["METHOD"]
+
+logging.basicConfig(filename=f'./exp/{args.dataset}_{args.alpha}_{args.gamma}_{aug_method}.log', level=logging.INFO)
 logging.getLogger().addHandler(logging.StreamHandler())
 
 label2idx, idx2label = label_dicts
@@ -51,15 +53,18 @@ np.random.seed(args.seed)
 torch.manual_seed(args.seed)
 logging.info(f'Using device {args.device}, seed={args.seed}, training on {args.dataset} dataset.')
 
-gm = HypEmo(args.dataset, num_classes, class_names, idx2vec, args.alpha, args.gamma, batch_size=args.batch_size)
+gm = HypEmo(args.dataset, num_classes, class_names, idx2vec, args.alpha, args.gamma, batch_size=args.batch_size, aug_method=aug_method)
 best_valid_weighted_f1, best_test_weighted_f1 = -1, -1
 best_valid_loss = 1e5
 train_loss, valid_loss = [], []
 train_acc, valid_acc, test_acc = [], [], []
 train_weighted_f1, valid_weighted_f1, test_weighted_f1 = [], [], []
+val_recall, test_recall = [], []
+val_precision, test_precision = [], []
 
 total_train_time = 0
 total_test_time = 0
+
 for i in range(args.epochs):
     start_time = time.time()
     train_log = gm.train_step(i)
@@ -83,28 +88,40 @@ for i in range(args.epochs):
     valid_acc.append(valid_log['valid_acc'])
     valid_weighted_f1.append(valid_log['valid_weighted_f1'])
     valid_loss.append(valid_log['valid_loss'])
+    val_recall.append(valid_log['valid_recall'])
+    val_precision.append(valid_log['valid_precision'])
     
     test_acc.append(test_log['test_acc'])
     test_weighted_f1.append(test_log['test_weighted_f1'])
+    test_recall.append(test_log['test_recall'])
+    test_precision.append(test_log['test_precision'])
     
     # define the path for saving the prediciton output 
-    valid_pred_path = f'./pred_output/epoch_{i}_valid_pred.csv'
-    test_pred_path = f'./pred_output/epoch_{i}_test_pred.csv'
+    # valid_pred_path = f'./pred_output/epoch_{i}_valid_pred.csv'
+    # test_pred_path = f'./pred_output/epoch_{i}_test_pred.csv'
     
-    valid_pred_best_loss_path = f'./≈epoch_{i}_valid_pred_best_loss.csv'
-    valid_pred_best_f1_path = f'./pred_output/epoch_{i}_valid_pred_best_f1.csv'
-    test_pred_best_f1_path = f'./pred_output/epoch_{i}_test_pred_best_f1.csv'
+    # valid_pred_best_loss_path = f'./≈epoch_{i}_valid_pred_best_loss.csv'
+    
+    dir_path = f'./pred_output/{aug_method}'
+    
+    # Check if the directory exists
+    if not os.path.exists(dir_path):
+        # Create the directory if it does not exist
+        os.makedirs(dir_path)
+        
+    valid_pred_best_f1_path = f'{dir_path}/valid_pred_best_f1.csv'
+    test_pred_best_f1_path = f'{dir_path}/test_pred_best_f1.csv'
     
     # save the predictions for valid and test sets at each epoch
-    save_predictions_to_csv(valid_pred_path, valid_log['valid_pred'])
-    save_predictions_to_csv(test_pred_path, test_log['test_pred'])
+    # save_predictions_to_csv(valid_pred_path, valid_log['valid_pred'])
+    # save_predictions_to_csv(test_pred_path, test_log['test_pred'])
 
     if valid_log['valid_loss'] < best_valid_loss:
         best_valid_loss = valid_log['valid_loss']
         test_acc_best_valid = test_log['test_acc']
         test_weighted_f1_best_valid = test_log['test_weighted_f1']
         logging.info(f"[valid loss new low] test | acc: {test_acc_best_valid:.04f}, f1: {test_weighted_f1_best_valid:.04f}")
-        save_predictions_to_csv(valid_pred_best_loss_path, valid_log['valid_pred'])        
+        # save_predictions_to_csv(valid_pred_best_loss_path, valid_log['valid_pred'])        
     
     if valid_log['valid_weighted_f1'] > best_valid_weighted_f1:
         best_valid_weighted_f1 = valid_log['valid_weighted_f1']

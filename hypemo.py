@@ -13,7 +13,7 @@ import torch
 import torch.nn as nn
 from torch.nn import MSELoss, CrossEntropyLoss
 from torch.utils.data import Dataset, DataLoader
-from sklearn.metrics import f1_score, accuracy_score
+from sklearn.metrics import f1_score, accuracy_score, precision_score, recall_score
 
 
 from config import parser
@@ -31,9 +31,9 @@ torch.cuda.manual_seed(args.seed)
 
 
 class HypEmo():
-    def __init__(self, dataset, n_classes, class_names, idx2vec, alpha, gamma, batch_size=16):
+    def __init__(self, dataset, n_classes, class_names, idx2vec, alpha, gamma, batch_size=16, aug_method = None):
         # trainset = HyoEmoDataSet(dataset, 'train')
-        trainset = HyoEmoDataSet(dataset, 'train')
+        trainset = HyoEmoDataSet(dataset, 'train', aug_method)
         self.train_loader = DataLoader(trainset, batch_size=batch_size, shuffle=True, collate_fn = trainset.collate)
         validset = HyoEmoDataSet(dataset, 'valid')
         self.valid_loader = DataLoader(validset, batch_size=256, shuffle=False, collate_fn = validset.collate)
@@ -102,7 +102,7 @@ class HypEmo():
         train_acc = accuracy_score(train_pred, train_label)
         train_weighted_f1 = f1_score(train_pred, train_label, average='weighted')
         logging.info(f'''train | loss: {total_loss/step:.04f} acc: {train_acc:.04f}, f1: {train_weighted_f1:.04f}''')
-        
+        # logging.info(f'''train | loss: {total_loss/step:.04f} acc: {train_acc:.04f}, f1: {train_weighted_f1:.04f}''')
         return {'loss': total_loss/step, 'train_acc': train_acc, 'train_weighted_f1': train_weighted_f1}
 
 
@@ -128,9 +128,13 @@ class HypEmo():
 
         valid_pred = valid_pred.detach().cpu().numpy()
         valid_acc = accuracy_score(valid_pred, valid_label)
+        # Add precison metrics
+        valid_precision = precision_score(valid_pred, valid_label, average='weighted')
+        # Add recall metrics
+        valid_recall = recall_score(valid_pred, valid_label, average='weighted')
         valid_weighted_f1 = f1_score(valid_pred, valid_label, average='weighted')
         logging.info(f'''valid | loss: {loss:.04f} acc: {valid_acc:.04f}, f1: {valid_weighted_f1:.04f}''')
-        return {'valid_loss': loss, 'valid_pred': valid_pred, 'valid_acc': valid_acc, 'valid_weighted_f1': valid_weighted_f1}
+        return {'valid_loss': loss, 'valid_pred': valid_pred, 'valid_acc': valid_acc, 'valid_weighted_f1': valid_weighted_f1, 'valid_precision': valid_precision, 'valid_recall': valid_recall}
     
     def test_step(self, ith_epoch):
         test_pred = None
@@ -154,7 +158,10 @@ class HypEmo():
           
         test_pred = test_pred.detach().cpu().numpy()
         test_acc = accuracy_score(test_pred, test_label)
+        # Add precison metrics
+        test_precision = precision_score(test_pred, test_label, average='weighted')
+        test_recall = recall_score(test_pred, test_label, average='weighted')
         test_weighted_f1 = f1_score(test_pred, test_label, average='weighted')
 
         logging.info(f'''test | acc: {test_acc:.04f}, f1: {test_weighted_f1:.04f}''')
-        return {'test_pred': test_pred, 'test_acc': test_acc, 'test_weighted_f1': test_weighted_f1}
+        return {'test_pred': test_pred, 'test_acc': test_acc, 'test_weighted_f1': test_weighted_f1, 'test_precision': test_precision, 'test_recall': test_recall}
