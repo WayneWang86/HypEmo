@@ -120,23 +120,37 @@ for i in range(args.epochs):
         best_valid_loss = valid_log['valid_loss']
         test_acc_best_valid = test_log['test_acc']
         test_weighted_f1_best_valid = test_log['test_weighted_f1']
-        logging.info(f"[valid loss new low] test | acc: {test_acc_best_valid:.04f}, f1: {test_weighted_f1_best_valid:.04f}")
+        test_recall_best_valid = test_log['test_recall']
+        test_precision_best_valid = test_log['test_precision']
+        
+        logging.info(f"[valid loss new low] test | acc: {test_acc_best_valid:.04f}, f1: {test_weighted_f1_best_valid:.04f}, recall: {test_recall_best_valid:.04f}, precision: {test_precision_best_valid:.04f}")
         # save_predictions_to_csv(valid_pred_best_loss_path, valid_log['valid_pred'])        
     
     if valid_log['valid_weighted_f1'] > best_valid_weighted_f1:
         best_valid_weighted_f1 = valid_log['valid_weighted_f1']
         best_valid_acc = valid_log['valid_acc']
-        test_acc_best_valid = test_log['test_acc']
-        test_weighted_f1_best_valid = test_log['test_weighted_f1']
-        logging.info(f"[valid f1 new high] test | acc: {test_acc_best_valid:.04f}, f1: {test_weighted_f1_best_valid:.04f}")
+        best_valid_precision = valid_log['valid_precision']
+        best_valid_recall = valid_log['valid_recall']
+        
+        # best_test_weighted_f1 = test_log['test_weighted_f1']
+        # best_test_acc = test_log['test_acc']
+        # best_test_precision = test_log['test_precision']
+        # best_test_recall = test_log['test_recall']
+        
+        logging.info(f"[valid f1 new high] valid | acc: {best_valid_acc:.04f}, f1: {best_valid_weighted_f1:.04f}, recall: {best_valid_recall:.04f}, precision: {best_valid_precision:.04f}\n ")
         save_predictions_to_csv(valid_pred_best_f1_path, valid_log['valid_pred'])
         
     if test_log['test_weighted_f1'] > best_test_weighted_f1:
         best_test_weighted_f1 = test_log['test_weighted_f1']
         best_test_acc = test_log['test_acc']
+        best_test_recall = test_log['test_recall']
+        best_test_precision = test_log['test_precision']
+        
+        logging.info(f"[test f1 new high] test | acc: {best_test_acc:.04f}, f1: {best_test_weighted_f1:.04f}, recall: {best_test_recall:.04f}, precision: {best_test_precision:.04f}\n ")
         save_predictions_to_csv(test_pred_best_f1_path, test_log['test_pred'])
 
-    logging.info(f"[best] valid | acc: {best_valid_acc:.04f}, f1: {best_valid_weighted_f1:.04f}\n test | acc: {best_test_acc:.04f}, f1: {best_test_weighted_f1:.04f}") 
+    logging.info(f"[best] valid | acc: {best_valid_acc:.04f}, f1: {best_valid_weighted_f1:.04f}, recall: {best_valid_recall:.04f}, precision: {best_valid_precision:.04f}\n \
+        test | acc: {best_test_acc:.04f}, f1: {best_test_weighted_f1:.04f}, recall: {best_test_recall:.04f}, precision: {best_test_precision:.04f}") 
     
     # save the predictions for valid and test sets at each epoch
     valid_csv_path = f'epoch_{i}_valid_pred.csv'
