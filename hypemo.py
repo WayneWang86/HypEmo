@@ -133,7 +133,7 @@ class HypEmo():
         # Add recall metrics
         valid_recall = recall_score(valid_pred, valid_label, average='weighted')
         valid_weighted_f1 = f1_score(valid_pred, valid_label, average='weighted')
-        logging.info(f'''valid | loss: {loss:.04f} acc: {valid_acc:.04f}, f1: {valid_weighted_f1:.04f}''')
+        logging.info(f'''valid | loss: {loss:.04f} acc: {valid_acc:.04f}, f1: {valid_weighted_f1:.04f}, precision: {valid_precision:.04f}, recall: {valid_recall:.04f}''')
         return {'valid_loss': loss, 'valid_pred': valid_pred, 'valid_acc': valid_acc, 'valid_weighted_f1': valid_weighted_f1, 'valid_precision': valid_precision, 'valid_recall': valid_recall}
     
     def test_step(self, ith_epoch):
@@ -163,5 +163,5 @@ class HypEmo():
         test_recall = recall_score(test_pred, test_label, average='weighted')
         test_weighted_f1 = f1_score(test_pred, test_label, average='weighted')
 
-        logging.info(f'''test | acc: {test_acc:.04f}, f1: {test_weighted_f1:.04f}''')
+        logging.info(f'''test | acc: {test_acc:.04f}, f1: {test_weighted_f1:.04f}, precision: {test_precision:.04f}, recall: {test_recall:.04f}''')
         return {'test_pred': test_pred, 'test_acc': test_acc, 'test_weighted_f1': test_weighted_f1, 'test_precision': test_precision, 'test_recall': test_recall}

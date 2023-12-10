@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Define an array of arguments
-args=("arg1" "arg2" "arg3" "arg4")
+args=("back_trans", "emo_to_text", "baseline", "gpt_aug", "multi-label", "noise_aug", "emoji_augmentation")
 
 # Loop through the array and execute the Python script with each argument
 for arg in "${args[@]}"
 do
-    python your_script.py "$arg"
+    python train.py "$arg"
 done
