@@ -1,0 +1,93 @@
+INFO:root:Using device cuda:0, seed=1234, training on go_emotion dataset.
+INFO:root:Using device cuda:0, seed=1234, training on go_emotion dataset.
+INFO:root:train | loss: 17.9753 acc: 0.4165, f1: 0.4423
+INFO:root:Training time for this epoch: 169.98
+INFO:root:valid | loss: 8.8433 acc: 0.6015, f1: 0.6266, precision: 0.6864, recall: 0.6015
+INFO:root:test | acc: 0.5908, f1: 0.6190, precision: 0.6745, recall: 0.5908
+INFO:root:Inference time for this epoch: 7.39
+INFO:root:[valid loss new low] test | acc: 0.5908, f1: 0.6190, recall: 0.5908, precision: 0.6745
+INFO:root:[valid f1 new high] valid | acc: 0.6015, f1: 0.6266, recall: 0.6015, precision: 0.6864
+ 
+INFO:root:[test f1 new high] test | acc: 0.5908, f1: 0.6190, recall: 0.5908, precision: 0.6745
+ 
+INFO:root:[best] valid | acc: 0.6015, f1: 0.6266, recall: 0.6015, precision: 0.6864
+         test | acc: 0.5908, f1: 0.6190, recall: 0.5908, precision: 0.6745
+INFO:root:train | loss: 9.9211 acc: 0.6227, f1: 0.6407
+INFO:root:Training time for this epoch: 170.39
+INFO:root:valid | loss: 6.6874 acc: 0.6370, f1: 0.6506, precision: 0.6773, recall: 0.6370
+INFO:root:test | acc: 0.6160, f1: 0.6315, precision: 0.6670, recall: 0.6160
+INFO:root:Inference time for this epoch: 7.40
+INFO:root:[valid loss new low] test | acc: 0.6160, f1: 0.6315, recall: 0.6160, precision: 0.6670
+INFO:root:[valid f1 new high] valid | acc: 0.6370, f1: 0.6506, recall: 0.6370, precision: 0.6773
+ 
+INFO:root:[test f1 new high] test | acc: 0.6160, f1: 0.6315, recall: 0.6160, precision: 0.6670
+ 
+INFO:root:[best] valid | acc: 0.6370, f1: 0.6506, recall: 0.6370, precision: 0.6773
+         test | acc: 0.6160, f1: 0.6315, recall: 0.6160, precision: 0.6670
+INFO:root:train | loss: 7.9647 acc: 0.6729, f1: 0.6842
+INFO:root:Training time for this epoch: 170.65
+INFO:root:valid | loss: 5.7603 acc: 0.6485, f1: 0.6592, precision: 0.6837, recall: 0.6485
+INFO:root:test | acc: 0.6377, f1: 0.6484, precision: 0.6766, recall: 0.6377
+INFO:root:Inference time for this epoch: 7.40
+INFO:root:[valid loss new low] test | acc: 0.6377, f1: 0.6484, recall: 0.6377, precision: 0.6766
+INFO:root:[valid f1 new high] valid | acc: 0.6485, f1: 0.6592, recall: 0.6485, precision: 0.6837
+ 
+INFO:root:[test f1 new high] test | acc: 0.6377, f1: 0.6484, recall: 0.6377, precision: 0.6766
+ 
+INFO:root:[best] valid | acc: 0.6485, f1: 0.6592, recall: 0.6485, precision: 0.6837
+         test | acc: 0.6377, f1: 0.6484, recall: 0.6377, precision: 0.6766
+INFO:root:train | loss: 6.6244 acc: 0.7112, f1: 0.7187
+INFO:root:Training time for this epoch: 170.71
+INFO:root:valid | loss: 5.7363 acc: 0.6407, f1: 0.6467, precision: 0.6622, recall: 0.6407
+INFO:root:test | acc: 0.6515, f1: 0.6584, precision: 0.6731, recall: 0.6515
+INFO:root:Inference time for this epoch: 7.39
+INFO:root:[valid loss new low] test | acc: 0.6515, f1: 0.6584, recall: 0.6515, precision: 0.6731
+INFO:root:[test f1 new high] test | acc: 0.6515, f1: 0.6584, recall: 0.6515, precision: 0.6731
+ 
+INFO:root:[best] valid | acc: 0.6485, f1: 0.6592, recall: 0.6485, precision: 0.6837
+         test | acc: 0.6515, f1: 0.6584, recall: 0.6515, precision: 0.6731
+INFO:root:train | loss: 5.5787 acc: 0.7394, f1: 0.7446
+INFO:root:Training time for this epoch: 170.31
+INFO:root:valid | loss: 6.6088 acc: 0.6512, f1: 0.6542, precision: 0.6669, recall: 0.6512
+INFO:root:test | acc: 0.6424, f1: 0.6467, precision: 0.6626, recall: 0.6424
+INFO:root:Inference time for this epoch: 7.40
+INFO:root:[best] valid | acc: 0.6485, f1: 0.6592, recall: 0.6485, precision: 0.6837
+         test | acc: 0.6515, f1: 0.6584, recall: 0.6515, precision: 0.6731
+INFO:root:train | loss: 4.6316 acc: 0.7669, f1: 0.7702
+INFO:root:Training time for this epoch: 170.73
+INFO:root:valid | loss: 5.9550 acc: 0.6495, f1: 0.6546, precision: 0.6670, recall: 0.6495
+INFO:root:test | acc: 0.6461, f1: 0.6503, precision: 0.6653, recall: 0.6461
+INFO:root:Inference time for this epoch: 7.41
+INFO:root:[best] valid | acc: 0.6485, f1: 0.6592, recall: 0.6485, precision: 0.6837
+         test | acc: 0.6515, f1: 0.6584, recall: 0.6515, precision: 0.6731
+INFO:root:train | loss: 3.8150 acc: 0.7918, f1: 0.7944
+INFO:root:Training time for this epoch: 170.36
+INFO:root:valid | loss: 6.2204 acc: 0.6529, f1: 0.6581, precision: 0.6713, recall: 0.6529
+INFO:root:test | acc: 0.6371, f1: 0.6430, precision: 0.6595, recall: 0.6371
+INFO:root:Inference time for this epoch: 7.41
+INFO:root:[best] valid | acc: 0.6485, f1: 0.6592, recall: 0.6485, precision: 0.6837
+         test | acc: 0.6515, f1: 0.6584, recall: 0.6515, precision: 0.6731
+INFO:root:train | loss: 2.9611 acc: 0.8158, f1: 0.8181
+INFO:root:Training time for this epoch: 170.55
+INFO:root:valid | loss: 5.2423 acc: 0.6536, f1: 0.6584, precision: 0.6713, recall: 0.6536
+INFO:root:test | acc: 0.6448, f1: 0.6499, precision: 0.6624, recall: 0.6448
+INFO:root:Inference time for this epoch: 7.41
+INFO:root:[valid loss new low] test | acc: 0.6448, f1: 0.6499, recall: 0.6448, precision: 0.6624
+INFO:root:[best] valid | acc: 0.6485, f1: 0.6592, recall: 0.6485, precision: 0.6837
+         test | acc: 0.6515, f1: 0.6584, recall: 0.6515, precision: 0.6731
+INFO:root:train | loss: 2.3206 acc: 0.8399, f1: 0.8417
+INFO:root:Training time for this epoch: 170.64
+INFO:root:valid | loss: 7.7300 acc: 0.6421, f1: 0.6451, precision: 0.6538, recall: 0.6421
+INFO:root:test | acc: 0.6448, f1: 0.6488, precision: 0.6584, recall: 0.6448
+INFO:root:Inference time for this epoch: 7.42
+INFO:root:[best] valid | acc: 0.6485, f1: 0.6592, recall: 0.6485, precision: 0.6837
+         test | acc: 0.6515, f1: 0.6584, recall: 0.6515, precision: 0.6731
+INFO:root:train | loss: 1.6467 acc: 0.8592, f1: 0.8606
+INFO:root:Training time for this epoch: 170.32
+INFO:root:valid | loss: 6.6357 acc: 0.6482, f1: 0.6504, precision: 0.6571, recall: 0.6482
+INFO:root:test | acc: 0.6414, f1: 0.6433, precision: 0.6486, recall: 0.6414
+INFO:root:Inference time for this epoch: 7.42
+INFO:root:[best] valid | acc: 0.6485, f1: 0.6592, recall: 0.6485, precision: 0.6837
+         test | acc: 0.6515, f1: 0.6584, recall: 0.6515, precision: 0.6731
+INFO:root:Average training time: 170.46329987049103
+INFO:root:Average inference time: 7.40515022277832
